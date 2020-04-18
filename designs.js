@@ -1,12 +1,5 @@
-// Select color input
-// Select size input
-
-// When size is submitted by the user, call makeGrid()
-
-// function makeGrid() {
-
-
 function makeGrid() {
+
 
 	const inputHeight = document.getElementById('inputHeight');
 	const inputWidth = document.getElementById('inputWidth');
@@ -26,10 +19,43 @@ function makeGrid() {
 		}
 	}
 
+	
+
 	document.querySelector('#pixelCanvas').addEventListener('click', function (evt) {
-    if (evt.target.nodeName === 'TD') {  // ← verifies target is desired element
-        var color = document.getElementById('#colorPicker').val;
-        evt.target.setAttribute('background-color',color);
-        console.log('A cell was clicked');
-    }});
+	    if (evt.target.nodeName === 'TD') {  // ← verifies target is desired element
+	        var color = document.getElementById('colorPicker').value;
+	        if (evt.target.hasAttribute("style") === true){
+	        	evt.target.removeAttribute("style");
+	        } else {
+		        console.log(color);
+		        evt.target.style.backgroundColor = color;
+		        console.log(evt.target.hasAttribute("style"));
+		        console.log('A cell was clicked');
+	        }
+
+	   	}
+	});
+
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+
+	document.querySelector('#sizePicker').addEventListener('click', function (evt) {
+	
+
+
+		if(document.getElementById('pixelCanvas').hasChildNodes() === true){
+			var tbl = document.getElementById('pixelCanvas');
+			while(tbl.rows.length > 0) {
+				  tbl.deleteRow(0);
+			}
+		}
+
+		if (evt.target.getAttribute("type")==="submit") {  // ← verifies target is desired element
+			evt.preventDefault();	
+
+			makeGrid(evt)
+		}
+	});
+
+});
